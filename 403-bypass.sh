@@ -58,6 +58,11 @@ function method_bypass() {
     make_request "${TARGET_URL}/${TARGET_PATH}" "" "TRACE"
 }
 
+function wayback_lookup() {
+    echo "Checking Wayback Machine for archived versions..."
+    curl -s "https://archive.org/wayback/available?url=${TARGET_URL}/${TARGET_PATH}" | jq -r '.archived_snapshots.closest | {available, url}'
+}
+
 if [[ $# -ne 2 ]]; then
     echo "Invalid arguments. Usage: ./403-bypass.sh [URL] [path]"
     exit 1
