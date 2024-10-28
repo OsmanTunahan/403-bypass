@@ -63,6 +63,21 @@ function wayback_lookup() {
     curl -s "https://archive.org/wayback/available?url=${TARGET_URL}/${TARGET_PATH}" | jq -r '.archived_snapshots.closest | {available, url}'
 }
 
+function main() {
+    figlet "${SCRIPT_NAME}"
+    echo "${AUTHOR}"
+    echo "Usage: ./403-bypass.sh [URL] [path]"
+    
+    echo -e "\nBypass Methods:"
+    bypass_methods
+    echo -e "\nHeader Bypass Methods:"
+    header_bypass_methods
+    echo -e "\nOther Methods:"
+    method_bypass
+    echo -e "\nWayback Machine:"
+    wayback_lookup
+}
+
 if [[ $# -ne 2 ]]; then
     echo "Invalid arguments. Usage: ./403-bypass.sh [URL] [path]"
     exit 1
