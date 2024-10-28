@@ -7,9 +7,12 @@ TARGET_PATH="$2"
 
 function color_code() {
     local status=$1
-    if [[ $status -eq 200 ]]; then echo -e "\e[32m$status\e[0m";
-    elif [[ $status -eq 403 ]]; then echo -e "\e[31m$status\e[0m";
-    else echo -e "\e[33m$status\e[0m";
+    if [[ $status -eq 200 ]]; then
+        echo -e "\033[32m$status\033[0m"
+    elif [[ $status -eq 403 ]]; then
+        echo -e "\033[31m$status\033[0m"
+    else
+        echo -e "\033[33m$status\033[0m"
     fi
 }
 
