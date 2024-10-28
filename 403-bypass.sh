@@ -12,3 +12,15 @@ function color_code() {
     else echo -e "\e[33m$status\e[0m";
     fi
 }
+
+function make_request() {
+    local url=$1
+    local extra_headers=$2
+    local method=$3
+
+    response=$(curl -k -s -o /dev/null -iL -w "%{http_code},%{size_download}" $extra_headers -X "${method:-GET}" "$url")
+    http_code=$(color_code $(echo "$response" | cut -d, -f1))
+    size=$(echo "$response" | cut -d, -f2)
+    
+    echo -e "[$(date +'%Y-%m-%d %H:%M:%S')] -> ${url} ${extra_headers}\n  Status: ${http_code}, Size: ${size} bytes"
+}
