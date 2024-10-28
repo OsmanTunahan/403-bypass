@@ -24,3 +24,10 @@ function make_request() {
     
     echo -e "[$(date +'%Y-%m-%d %H:%M:%S')] -> ${url} ${extra_headers}\n  Status: ${http_code}, Size: ${size} bytes"
 }
+
+if [[ $# -ne 2 ]]; then
+    echo "Invalid arguments. Usage: ./403-bypass.sh [URL] [path]"
+    exit 1
+else
+    main
+fi
